@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/layout">
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -16,14 +18,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
+        <ListView
+            android:id="@+id/lv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="ToDo's"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            />
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                />
+            <TextView
+                android:id="@+id/enddat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                />
+        </ListView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
