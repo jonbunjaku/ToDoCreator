@@ -8,7 +8,7 @@ import java.util.List;
 
 @Dao
 public interface ToDoDao {
-    @Query("SELECT * FROM todo")
+    @Query("SELECT * FROM ToDo")
     List<ToDo> getAllToDos();
 
     @Insert

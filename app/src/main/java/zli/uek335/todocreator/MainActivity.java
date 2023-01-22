@@ -3,9 +3,13 @@ package zli.uek335.todocreator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Button createTodoButton = findViewById(R.id.addToDoButton);
+
         linearLayout = findViewById(R.id.layout);
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "todo").allowMainThreadQueries().build();
+                AppDatabase.class, "ToDo").allowMainThreadQueries().build();
         ToDoDao toDoDao = db.toDoDao();
 
         List<ToDo> allToDos = toDoDao.getAllToDos();
@@ -37,24 +43,17 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < allToDos.size(); i++) {
             TextView ToDo = new TextView(this);
             ToDo.setText(allToDos.get(i).name + "\t\t" + allToDos.get(i).enddat);
+            ToDo.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
+            ToDo.setPadding(0,20,0,0);
+            linearLayout.addView(ToDo);
         }
 
-
+    createTodoButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent createToDo = new Intent(MainActivity.this, FormPageActivity.class);
+            startActivity(createToDo);
+        }
+    });
     }
-/*    private void displayData() {
-        Cursor c = db.query("SELECT * FROM ToDo", null);
-        while (c.moveToNext()) { //Loop through all the records
-            //Now on the variable 'c' there is one record.
-
-            int name = c.getColumnIndex("name"); //Get the index of the column from your table.
-            String nameval = c.getString(name); //Get the value from the column from the current record.
-
-            int enddat = c.getColumnIndex("enddat");
-            String enddatVal = c.getString(enddat);
-
-
-        }
-
-        arrayAdapter.notifyDataSetChanged(); //Notify, that you have changed some data in the array list.
-    }*/
 }
