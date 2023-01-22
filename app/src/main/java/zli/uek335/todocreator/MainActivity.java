@@ -6,7 +6,11 @@ import androidx.room.Room;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,26 +20,28 @@ import zli.uek335.todocreator.model.ToDo;
 import zli.uek335.todocreator.model.ToDoDao;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayAdapter arrayAdapter;
-    private ArrayList<ToDo> toDos = new ArrayList<>();
-    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-            AppDatabase.class, "todo").allowMainThreadQueries().build();
-    ToDoDao toDoDao = db.toDoDao();
+    LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List toDo =
-        toDos = new ArrayList<String>(toDoDao.getAllToDos());
+        linearLayout = findViewById(R.id.layout);
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "todo").allowMainThreadQueries().build();
+        ToDoDao toDoDao = db.toDoDao();
 
-        ListView lv = (ListView) findViewById(R.id.lv);
-        arrayAdapter = new ToDo_ListAdapter(this, toDos);
-        lv.setAdapter(arrayAdapter);
+        List<ToDo> allToDos = toDoDao.getAllToDos();
 
-        displayData();
+        for(int i = 0; i < allToDos.size(); i++) {
+            TextView ToDo = new TextView(this);
+            ToDo.setText(allToDos.get(i).name + "\t\t" + allToDos.get(i).enddat);
+        }
+
+
     }
-    private void displayData() {
+/*    private void displayData() {
         Cursor c = db.query("SELECT * FROM ToDo", null);
         while (c.moveToNext()) { //Loop through all the records
             //Now on the variable 'c' there is one record.
@@ -50,5 +56,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         arrayAdapter.notifyDataSetChanged(); //Notify, that you have changed some data in the array list.
-    }
+    }*/
 }
